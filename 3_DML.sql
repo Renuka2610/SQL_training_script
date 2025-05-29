@@ -4,16 +4,16 @@ drop table students;
 
 -- Step 1: Create the students table (if not already exists)
 CREATE TABLE students (
-    id INT PRIMARY KEY,
+    id INT ,
     name VARCHAR(100),
-    age INT
+    age INT default 21
 );
-
+desc students;
 -- Step 2: INSERT data into students table
-INSERT INTO students (id, name, age) 
-VALUES (1, 'Alice', 21), 
+INSERT INTO students (id, name, age)
+VALUES (1,'Dan', 21),
        (2, 'Bob', 22), 
-       (3, 'Charlie', 20);
+      (3, 'Charlie', 20);
 
 -- View table after INSERT
 SELECT * FROM students;
@@ -25,7 +25,7 @@ WHERE id = 1;
 SELECT * FROM students;
 
 
--- SET SQL_SAFE_UPDATES = 0;
+ SET SQL_SAFE_UPDATES = 0;
 UPDATE students 
 SET age = 71
 WHERE name = 'Alice';
@@ -42,4 +42,6 @@ WHERE name = 'Bob';
 
 -- View table after DELETE
 SELECT * FROM students;
--- SET SQL_SAFE_UPDATES = 1;
+ SET SQL_SAFE_UPDATES = 0;
+
+select @@SQL_SAFE_UPDATES ;

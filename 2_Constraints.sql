@@ -13,6 +13,8 @@ INSERT INTO departments (dept_id, dept_name) VALUES
 (1, 'HR'),
 (2, 'IT'),
 (3, 'Finance');
+INSERT INTO departments (dept_id, dept_name) VALUES
+(4, 'HR');
 
 CREATE TABLE employees (
     emp_id INT PRIMARY KEY,
@@ -29,7 +31,7 @@ VALUES (201, 'Alice', 'alice@example.com', 17, 1);
 
 -- for Default -- remove the salary and push
 INSERT INTO employees (emp_id, name, email, age, salary, department_id)
-VALUES (204, 'David', 'david@example.com', 40, 50000.00, 2);
+VALUES (206, 'David', 'david12@example.com', 40, 50000, 6);
 
  desc employees;
 select * from employees;

@@ -1,4 +1,6 @@
+create database demo_db;
 use demo_db;
+show tables;
 drop table students;
 
 -- 1. CREATE: Create the students table

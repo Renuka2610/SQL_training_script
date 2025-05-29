@@ -1,4 +1,8 @@
+
+drop database  if exists demo_db;
+create database if not exists demo_db;
 USE demo_db;
+show databases;
 
 show tables;
 CREATE TABLE employees (
@@ -15,5 +19,7 @@ VALUES
 (103, 'Charlie', 35, 'Finance', 75000.00);
 
 select * from employees;
+show tables;
+desc employees;
 
 

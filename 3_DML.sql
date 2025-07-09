@@ -4,7 +4,7 @@ drop table students;
 
 -- Step 1: Create the students table (if not already exists)
 CREATE TABLE students (
-    id INT ,
+    id INT unique,
     name VARCHAR(100),
     age INT default 21
 );
@@ -24,13 +24,11 @@ SET age = 23
 WHERE id = 1;
 SELECT * FROM students;
 
-
- SET SQL_SAFE_UPDATES = 0;
+ -- SET SQL_SAFE_UPDATES = 0;
 UPDATE students 
 SET age = 71
-WHERE name = 'Alice';
+WHERE name = 'Bob';
  
-
 -- View table after UPDATE
 SELECT * FROM students;
 
@@ -42,6 +40,7 @@ WHERE name = 'Bob';
 
 -- View table after DELETE
 SELECT * FROM students;
- SET SQL_SAFE_UPDATES = 0;
+ SET SQL_SAFE_UPDATES = 1;
 
 select @@SQL_SAFE_UPDATES ;
+desc students;

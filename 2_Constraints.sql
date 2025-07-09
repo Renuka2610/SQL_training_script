@@ -22,16 +22,22 @@ CREATE TABLE employees (
     email VARCHAR(100) UNIQUE,
     age INT CHECK (age >= 18),
     salary DECIMAL(10, 2) DEFAULT 30000.00,
-    department_id INT,
-    FOREIGN KEY (department_id) REFERENCES departments(dept_id)
+    department_id INT unique ,
+   FOREIGN KEY (department_id) REFERENCES departments(dept_id)
 );
 -- for CHECK
- INSERT INTO employees (emp_id, name, email, age, department_id)
-VALUES (201, 'Alice', 'alice@example.com', 17, 1);
+ INSERT INTO employees (emp_id, name, email, age, salary)
+VALUES (2011, 'Alice', 'alicae@example.com', 18, 300);
 
 -- for Default -- remove the salary and push
-INSERT INTO employees (emp_id, name, email, age, salary, department_id)
-VALUES (206, 'David', 'david12@example.com', 40, 50000, 6);
+INSERT INTO employees 
+VALUES (2012, 12 , 'david12256ql514@example.com', '50', 40,6 );
 
  desc employees;
 select * from employees;
+select * from departments;
+
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM information_schema.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'employees';
+

@@ -1,7 +1,7 @@
 create database demo_db;
 use demo_db;
 show tables;
-drop table students;
+drop table if exists students;
 
 -- 1. CREATE: Create the students table
 CREATE TABLE students (
@@ -36,6 +36,7 @@ SELECT * FROM students;
 -- 4. DROP: Permanently delete the table
 DROP TABLE students;
 show tables;
+
 -- View table after DROP (will throw error because table no longer exists)
 SELECT * FROM students;
 

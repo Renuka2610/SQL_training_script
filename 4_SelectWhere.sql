@@ -1,6 +1,9 @@
 use demo_db;
-
+show databases;
+use db_12;
+show tables;
 drop table Customer;
+drop table CustomerBackup;
 
 CREATE TABLE Customer (
     CustID INT PRIMARY KEY,
@@ -9,9 +12,15 @@ CREATE TABLE Customer (
     Age INT,
     Address VARCHAR(100)
 );
+CREATE TABLE CustomerBackup (
+    CustID INT PRIMARY KEY auto_increment,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50)
+);
+select * from CustomerBackup;
 INSERT INTO Customer (CustID, FirstName, LastName, Age, Address) VALUES
 (1, 'Deven', 'Prajapati', 25, 'Pune'),
-(2, 'Anita', 'Verma', 30, 'Delhi'),
+(2, 'Anita', 'Ve%rma', 30, 'Delhi'),
 (3, 'Suresh', 'Patel', 40, NULL),
 (4, 'Rekha', 'Soorma', 22, 'Mumbai'),
 (5, 'Arjun', 'Mehta', 22, 'Pune'),
@@ -23,16 +32,25 @@ INSERT INTO Customer (CustID, FirstName, LastName, Age, Address) VALUES
 
 --  SELECT Statements with WHERE Examples
 -- Basic SELECT
-SELECT * FROM Customer;
-
+SELECT  *,firstname FROM demo_db.Customer;
+ set @var = 123; 
+select @var;
 -- SELECT Specific Columns
-SELECT FirstName, LastName FROM Customer;
+SELECT * , concat(FirstName, LastName) as fullname FROM Customer;
+
+SET @FirstName = null;
+SELECT firstname INTO @var FROM Customer WHERE LastName = 'Lee' ;
+SELECT avg(age) INTO @var FROM Customer;
+select @var;
+
+
+INSERT INTO CustomerBackup (FirstName, LastName) SELECT FirstName, LastName FROM Customer;
 
 -- WHERE with Equality
 SELECT * FROM Customer WHERE Age = 25;
 
 -- WHERE with Comparison
-SELECT * FROM Customer WHERE Age > 30;
+SELECT * FROM Customer WHERE not Age = 30;
 
 -- WHERE with AND
 SELECT * FROM Customer WHERE Age =  25 AND Address = 'Pune';
@@ -51,31 +69,33 @@ SELECT * FROM Customer WHERE Address IN ('Mumbai', 'Pune', 'Delhi');
 
 -- WHERE with LIKE
 
-SELECT * FROM Customer WHERE LastName LIKE 'S%';   -- starts with 'S'
+SELECT * FROM Customer WHERE LastName LIKE '%\%%';   -- starts with 'S'
 SELECT * FROM Customer WHERE FirstName LIKE '%an'; -- ends with 'an'
-SELECT * FROM Customer WHERE Address LIKE '%el%'; -- contains 'road'
+SELECT * FROM Customer WHERE Address LIKE '%e%'; -- contains 'road'
+SELECT * FROM Customer WHERE  binary FirstName LIKE 'A%';
 
-SELECT * FROM Customer WHERE LastName LIKE 'S___ma'; -- exact length
+SELECT * FROM Customer WHERE firstname LIKE 'S__ma'; -- exact length
 SELECT * FROM Customer WHERE LastName LIKE '____a';
 -- WHERE IS NULL
 SELECT * FROM Customer WHERE Address IS NULL; --
 
 -- WHERE IS NOT NULL
-SELECT * FROM Customer WHERE Age IS NOT NULL;
+SELECT * FROM Customer WHERE Age IS NULL;
 
 -- SELECT DISTINCT
-SELECT DISTINCT Age FROM Customer;
+SELECT  DISTINCT  Address FROM Customer;
 
 -- ORDER BY
 SELECT * FROM Customer ORDER BY LastName DESC;
-SELECT * FROM Customer ORDER BY Age ASC;
+SELECT * FROM Customer ORDER BY Age ;
 -- GROUP BY
-SELECT Age, COUNT(*) FROM Customer GROUP BY Age;
+SELECT address, COUNT(*) FROM Customer GROUP BY Address;
 
 -- HAVING
-SELECT Age, COUNT(*) FROM Customer GROUP BY Age HAVING COUNT(*) > 1;
+SELECT address, COUNT(*) FROM Customer GROUP BY Address HAVING COUNT(*) > 1;
  -- LIMIT
- SELECT * FROM Customer LIMIT 5;
+ SELECT * FROM Customer order by age;
+ SELECT * FROM Customer order by age limit 3 offset 1;
 
 select @@autocommit;
  -- set autocommit = 1;
@@ -84,7 +104,8 @@ select @@autocommit;
  start transaction;
  SELECT * FROM Customer WHERE LastName = 'Sharma';
 UPDATE Customer SET Address = 'New York' WHERE LastName = 'Sharma';
-
+update Customer set Lastname = "ver@ma" where custid = 2;
+update Customer set firstname = "anita" where custid = 2;
 -- DELETE with WHERE
 SELECT * FROM Customer ;
 DELETE FROM Customer WHERE Age > 30 or Age is null;

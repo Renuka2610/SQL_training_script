@@ -13,12 +13,10 @@ INSERT INTO employees (name, dept_id, salary) VALUES
 ('Bob', 102, 60000),
 ('Charlie', 101, 55000);
 
-CREATE VIEW hr_employees AS
-SELECT name, salary
-FROM employees
-WHERE dept_id = 101;
+CREATE or replace VIEW  hr_employees AS
+SELECT name, salary FROM employees where dept_id = "101";
 
-
+drop VIEW hr_employees;
 SELECT * FROM hr_employees;
 SELECT * FROM employees;
 

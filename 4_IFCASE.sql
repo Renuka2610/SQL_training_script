@@ -6,6 +6,8 @@ CREATE TABLE Employees (
     Department VARCHAR(50),
     Salary INT
 );
+
+select * from Employees;
 INSERT INTO Employees (EmpID, Name, Department, Salary) VALUES
 (1, 'Alice', 'HR', 45000),
 (2, 'Bob', 'IT', 80000),
@@ -19,18 +21,27 @@ SELECT Name, Salary,
 FROM Employees;
 
 SELECT Name, Salary,
-       IF(Salary < 40000, 'Low',
-          IF(Salary BETWEEN 40000 AND 70000, 'Medium', 'High')) AS SalaryGrade
+       IF(Salary < 40000, 'Low', 
+			IF(Salary BETWEEN 40000 AND 70000, 'Medium', 'High')) AS SalaryGrade
 FROM Employees;
 
 SELECT Name, Department,
-       CASE
+       CASE 
          WHEN Department = 'IT' THEN 'Technical'
          WHEN Department = 'HR' THEN 'Administrative'
          WHEN Department = 'Sales' THEN 'Business'
          ELSE 'Other'
-       END AS DeptCategory
+       END 
+       AS DeptCategory
 FROM Employees;
+
+update Employees 
+set DeptCategory = CASE 
+         WHEN Department = 'IT' THEN 'Technical'
+         WHEN Department = 'HR' THEN 'Administrative'
+         WHEN Department = 'Sales' THEN 'Business'
+         ELSE 'Other'
+       END;
 
 
 SELECT Name, Department,

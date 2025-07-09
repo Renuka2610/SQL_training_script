@@ -14,12 +14,11 @@ INSERT INTO students VALUES
 (3, 'Sneha', 58),
 (4, 'Amit', 39),(5, 'Pramit', 62);
 
-
+DROP FUNCTION IF EXISTS get_luck_statusTrad;
 DELIMITER $$
-
 CREATE FUNCTION get_luck_statusTrad(marks INT)
 RETURNS VARCHAR(20)
-READS SQL DATA
+reads sql data
 NOT DETERMINISTIC
 BEGIN
     DECLARE new_marks INT;

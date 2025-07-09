@@ -1,4 +1,4 @@
-use demo_db;
+	use demo_db;
 drop table employees;
 
 -- Create the employees table
@@ -15,7 +15,7 @@ CREATE TABLE employees (
 -- Insert sample data
 INSERT INTO employees (name, email, salary, hire_date, dept_id) VALUES
 ('Alice', 'alice@example.com', 50000.754, '2020-01-15', 101),
-('Bob', 'bob@example.com', 62000.499, '2019-03-20', 102),
+('Bob', 'bob@hi.com', 62000.499, '2019-03-20', 102),
 ('Carol', 'carol@example.com', 70000, '2022-11-01', 101),
 ('David', 'david@example.com', 45000.125, '2023-05-10', 103),
 ('Eve', 'eve@example.com', 58000, '2021-07-22', 102);
@@ -26,8 +26,9 @@ select * from employees;
 -- String Functions
 SELECT name, CONCAT(name, ' - ', email,' ', hire_date) AS contact_info FROM employees; -- concat
 SELECT name, LENGTH(name) AS name_length FROM employees; -- LENGTH
-SELECT name, SUBSTRING(name, 1, 5) AS email_prefix FROM employees; -- subsrtring (field, begin, size) -- min is 1
+SELECT name, SUBSTRING(name, 2, 3) AS email_prefix FROM employees; -- subsrtring (field, begin, size) -- min is 1
 SELECT name, REPLACE(email, '@example.com', '@company.org') AS updated_email FROM employees; -- replace (fld, old str, new str)
+
 SELECT 
     name, 
     CONCAT(name, ' - ', email) AS contact_info,
@@ -35,12 +36,16 @@ SELECT
     SUBSTRING(email, 1, 5) AS email_prefix,
     REPLACE(email, '@example.com', '@company.org') AS updated_email
 FROM employees;
+SELECT name, concat(name, email,hire_date) AS contact_info FROM employees; -- concat
+SELECT name, concat_ws("-",name, email,hire_date) AS contact_info FROM employees; -- concat
 
 -- Numeric Functions
 SELECT name, salary, ROUND(salary) AS rounded_salary FROM employees; --  round (fld, round by value)
-SELECT name, salary as og_Salary, CEIL(salary) AS ceil_salary, FLOOR(salary) AS floor_salary FROM employees; -- floor/ceil (fld)
+SELECT name, salary as og_Salary,  ROUND(salary), CEIL(salary) AS ceil_salary, FLOOR(salary) AS floor_salary FROM employees; -- floor/ceil (fld)
 SELECT id, MOD(id, 2) AS is_even FROM employees;  -- 0 for even, 1 for odd
-
+-- sqrt, pow, rand(), 
+select sqrt(16);
+select round(rand() * 100);
 SELECT 
     name, salary as og_Salary,
     ROUND(salary, 1) AS rounded_salary,
@@ -59,7 +64,7 @@ SELECT name, DATEDIFF(CURDATE(), hire_date) AS days_worked FROM employees; --  D
 SELECT  DATEDIFF(CURDATE(),'1999-10-26') AS 'Age in days' ;
 SELECT  DATEDIFF('2000-10-26','1999-10-26') AS 'Age in days' ; 
 
-SELECT name, TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) AS years_worked FROM employees; -- TIMESTAMPDIFF(unit, datetime1, datetime2)
+SELECT name, TIMESTAMPDIFF(day, hire_date, CURDATE()) AS years_worked FROM employees; -- TIMESTAMPDIFF(unit, datetime1, datetime2)
 
 SELECT
   TIMESTAMPDIFF(SECOND, '2025-05-11 10:00:00', '2026-05-11 10:00:30') AS seconds_diff,
@@ -81,14 +86,14 @@ FROM employees;
 -- Aggregate Functions
 SELECT * FROM employees;
 SELECT COUNT(*) AS total_employees FROM employees;
-SELECT SUM(salary) AS total_salary FROM employees;
+SELECT dept_id, SUM(salary) AS total_salary FROM employees group by dept_id;
 
 SELECT AVG(salary) AS average_salary FROM employees;
 SELECT dept_id, AVG(salary) AS avg_salary
 FROM employees
 GROUP BY dept_id;
 
-SELECT MIN(salary) AS lowest_salary, MAX(salary) AS highest_salary FROM employees;
+SELECT dept_id, MIN(salary) AS lowest_salary, MAX(salary) AS highest_salary FROM employees GROUP BY dept_id;
 SELECT 
     dept_id, count(*),
     MIN(salary) AS min_salary,
@@ -118,5 +123,5 @@ SELECT CAST('2024-01-01' AS DATE);
 SELECT CONVERT(now(), char) AS hire_date_str;
 
 -- Using CONVERT
-SELECT CONVERT('2024-01-01', DATE);
+SELECT cast('-1'as unsigned);
 

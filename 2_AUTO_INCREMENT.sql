@@ -7,12 +7,12 @@ CREATE TABLE students (
     age INT
 );
 desc students;
-INSERT INTO students (name, age) VALUES ('Alice', 21);
+INSERT INTO students (id, name, age) VALUES (default, 'Alice', 21),(default, "Raj",22);
 -- INSERT INTO students VALUES (51,'Bob7', 22);
-INSERT INTO students  VALUES (default, 'Charlie', 20);
+INSERT INTO students  VALUES (500, 'Charlie', 20);
 
-ALTER TABLE students AUTO_INCREMENT = 1001;
+ALTER TABLE students AUTO_INCREMENT = 600;
 -- MySQL does not allow setting AUTO_INCREMENT starting value inside CREATE TABLE, 
 -- but ALTER TABLE works perfectly.
 
-select * from students limit 5 offset 8;
+select * from students  ;

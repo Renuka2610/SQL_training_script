@@ -16,9 +16,7 @@ INSERT INTO students VALUES
 (3, 'Sneha', 58),
 (4, 'Amit', 39),(5, 'Pramit', 62);
 
-
 DELIMITER $$
-
 CREATE FUNCTION get_grade(marks INT)
 RETURNS VARCHAR(2)
 DETERMINISTIC
@@ -39,10 +37,8 @@ BEGIN
 
     RETURN grade;
 END$$
-
 DELIMITER ;
-
-SELECT roll_no, student_name, marks, get_grade(marks) AS grade FROM students;
+SELECT *, get_grade(marks)AS grade FROM students where roll_no = 1;
 -- -------------------------------------------------------------------------------------------------------
 
 
@@ -64,8 +60,27 @@ END$$
 
 DELIMITER ;
 -- select SECOND(NOW());
-SELECT student_name,marks, get_time_based_code(marks) AS NewMarks FROM students;
+SELECT student_name,marks,SECOND(NOW()), get_time_based_code(marks) AS NewMarks FROM students;
 
+delimiter $$
+create function get_grade_time_based(marks int)
+returns varchar(2)
+READS SQL DATA
+NOT DETERMINISTIC
+begin
+    declare sec int;
+    declare result int;
+
+    set sec = SECOND(NOW());
+    set result =  sec + marks;
+    RETURN result;
+END$$
+
+DELIMITER ;
+
+-- update students set grade = get_grade(marks);
+select * from students;
+select *, SECOND(NOW()),  get_grade_time_based(marks) as new_marks from students;
 -- ---------------------------------------------------------------------------------------
 -- funct1(x){
 -- func2 (y)
